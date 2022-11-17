@@ -15,7 +15,7 @@ const ListSchema = new mongoose.Schema({
     },
     fee:{   
         type:Number,
-        required: true,
+        
         minlength: 1,
     },
     date:{

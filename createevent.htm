@@ -241,7 +241,7 @@
       </form>
       <script>
         var app = angular.module("mainApp", []);
-        app.controller("eventCtrl", function($scope) {
+        app.controller("eventCtrl", function($scope,$http) {
           $scope.title = "";
           $scope.organizer = "";
           $scope.description = "";
@@ -255,6 +255,24 @@
             console.log($scope.date);
             console.log($scope.time);
             console.log($scope.cost);
+            var data = {
+              title: $scope.title,
+              organizer: $scope.organizer,
+              description: $scope.description,
+              date: $scope.date,
+              time: $scope.time,
+              cost: $scope.cost
+            };
+            $http.post("http://localhost:3000/lists", data).then(
+              function(response) {
+                console.log(response);
+              },
+              function(response) {
+                console.log(response);
+              }
+            );
+
+
           };
         });
     

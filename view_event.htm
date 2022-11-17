@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Events</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/3706/3706642.png">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript">
+
+        var app = angular.module('serviceApp', []);
+        
+        app.controller('serviceCtrl', function ($scope, $http) {
+        
+        $http({
+        
+        method: 'GET',
+        
+        url: 'http:localhost:3000/lists'
+        
+        }).then(function success(response) {
+        
+         $scope.lists = response.data;
+         console.log("success")
+        
+        }, function error(response) {
+        console.log("error")
+        });
+        
+        
+    
+        
+        });
+        
+        </script>
+        
+        </head>
+        
+        <body>
+        
+        <div ng-app="serviceApp" ng-controller="serviceCtrl">
+        
+        <div ng-repeat="list in lists" style="background-color:  #080808; border-radius: 10px; margin: 20px;">
+            <h1 style="color: #ffffff;">{{list['title']}}</h1>
+            <p>{{list['description']}}</p>
+            <p>{{list['date']}}</p>
+            <p>{{list['time']}}</p>
+             
+            <p>{{list['organizer']}}</p>
+            
+            </div>
+        
+        </div>
+        
+        </body>
+    
+</body>
+</html>
