@@ -140,15 +140,27 @@ h1 {
         </form>
 <script>
 var app = angular.module('mainApp', []);
-app.controller('notiCtrl', function($scope) {
+app.controller('notiCtrl', function($scope,$http) {
     $scope.title = "";
     $scope.content = "";
     $scope.Submit = function() {
         if ($scope.title == "" || $scope.content == "") {
             alert("Please fill all the fields");
-        } else {
-            alert("Notification Created");
-        }
+        }  
+        console.log($scope.title);
+        console.log($scope.content);
+        var data = {
+            "title": $scope.title,
+            "content": $scope.content
+        };
+        $http.post("http://localhost:3000/tasks", data).then(function(response) {
+            if(response['data']=="task already exist"){
+                alert("task already exists");
+            }
+            else{
+                alert("task added successfully");
+            }
+        });
     }
 
 });

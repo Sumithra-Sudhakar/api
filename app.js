@@ -26,7 +26,7 @@ app.get('/lists', (req, res) => {
     
 });
 
-app.post('/lists', (req, res) => {
+app.post('/lists', async (req, res) => {
     //create a new list and return the new list document    
     let title = req.body.title;
     let organizer = req.body.organizer;
@@ -46,10 +46,24 @@ app.post('/lists', (req, res) => {
         time,
         
     });
-    newList.save().then((listDoc) => {
-        //the full list document is returned
-        res.send(listDoc);
-    })
+
+    const listexist =   await List.findOne({title: req.body.title});
+    if(listexist){
+        res.send("event already exist");
+        console.log("event already exist");
+    }
+    else{
+        newList.save().then((listDoc) => {
+            //the full list document is returned
+            res.send(listDoc);
+            console.log("event added");
+        })
+    }
+
+
+
+
+    
 });
 app.patch('/lists/:id', (req, res) => {
     //update the specified list (list document with id in the URL) with the new values specified in the JSON body of the request
@@ -59,13 +73,13 @@ app.patch('/lists/:id', (req, res) => {
         res.sendStatus(200);
     })
 });
-app.delete('/lists/:id', (req, res) => {
+app.delete('/lists/:title', (req, res) => {
     //delete the specified list (list document with id in the URL)
     List.findOneAndRemove({
-        _id: req.params.id
+        title: req.params.title
     }).then((removedListDoc) => {
         res.send(removedListDoc);
-    })
+    }) 
 });
 
 
@@ -114,15 +128,17 @@ app.patch('/tasks/:taskId', (req, res) => {
         res.send({message: 'Updated successfully.'});
     })
 });
-app.delete('tasks/:taskId', (req, res) => {
-    //delete a task (specified by taskId)
-    Task.findOneAndRemove({
-        _id: req.params.taskId,
-      
+app.delete('/tasks/:title', (req, res) => {
+    //delete the specified list (list document with id in the URL)
+    List.findOneAndRemove({
+        title: req.params.title
     }).then((removedTaskDoc) => {
         res.send(removedTaskDoc);
+    }).catch((err) => {
+         res.send(err);
     })
 });
+
 app.listen(3000, () => {
     console.log('Server started on port 3000');
 });

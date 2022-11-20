@@ -123,7 +123,7 @@
     <div>
       <center>
         <div class="nine">
-          <h1>Create Event</h1>
+          <h1>Delete Event</h1>
         </div>
       </center>
       <form  name="eventForm"   ng-app="mainApp" ng-controller="eventCtrl" novalidate  >
@@ -145,96 +145,7 @@
             </span>
           </div>
         </div>
-        <div class="field" style="margin: 10px">
-          <label class="label">Organizer</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Text input"
-              ng-model="organizer"
-              name="organizer"
-              required
-            />
-            <span ng-show="eventForm.organizer.$error.required" style="color: red; margin-top:20px"
-              >Organizer is required.</span>
-            </div>
-      
-         </div>
-        <div class="field" style="margin: 10px">
-          <label class="label">Description</label>
-          <div class="control">
-            <textarea
-              class="textarea"
-              placeholder="Textarea"
-              ng-model="description"
-              name="description"
-              required
-            ></textarea>
-            <span ng-show="eventForm.description.$error.required" style="color: red; margin-top:20px"
-              >Description is required.</span>
-           </div>
-        </div>
-
-        <div class="field" style="margin: 10px">
-          <label class="label">Date</label>
-          <div class="control">
-            <input
-              class="input"
-              type="date"
-              placeholder="Text input"
-              ng-model="date"
-              name="date"
-              required
-            />
-            <span ng-show="eventForm.date.$error.required" style="color: red; margin-top:20px"
-              >Date is required.</span>
-          </div>
-        </div>
-        <div class="field" style="margin: 10px">
-          <label class="label">Time</label>
-          <div class="control">
-            <input
-              class="input"
-              type="time"
-              placeholder="Text input"
-              ng-model="time"
-              name="time"
-              required
-            />
-            <span ng-show="eventForm.time.$error.required" style="color: red; margin-top:20px"
-              >Time is required.</span>
-          </div>
-        </div>
-        <div class="field" style="margin: 10px">
-          <label class="label">Fee</label>
-          <div class="control">
-            <input
-              class="input"
-              type="number"
-              placeholder="Cost of the event must be between 0 to 200"
-              ng-model="cost"
-              required
-              min="0"
-              max="200"
-              name="cost"
-            />
-            <span
-              style="color: red"
-              ng-show="eventForm.cost.$dirty && eventForm.cost.$invalid"
-            >
-              <span ng-show="eventForm.cost.$error.required">Cost is required.</span>
-              <span ng-show="eventForm.cost.$error.min">Cost is too low.</span>
-              <span ng-show="eventForm.cost.$error.max">Cost is too high.</span>
-            </span>
-          </div>
-        </div>
-       <div style="margin: 20px;">
-        <label class="label">Mode</label>
-        <input type="radio" value="online" ng-model="mode" name="mode" id="mode">Online<br>
-        <input type="radio" value="offline" ng-model="mode" name="mode" id="mode">Offline <br>
         
-       </div>
 
         <button
           class="btn"
@@ -249,37 +160,16 @@
         var app = angular.module("mainApp", []);
         app.controller("eventCtrl", function($scope,$http) {
           $scope.title = "";
-          $scope.organizer = "";
-          $scope.description = "";
-          $scope.date = "";
-          $scope.time = "";
-          $scope.cost = "";
-          $scope.mode = "";
+          
           $scope.Submit = function() {
             console.log($scope.title);
-            console.log($scope.organizer);
-            console.log($scope.description);
-            console.log($scope.date);
-            console.log($scope.time);
-            console.log($scope.cost);
-            console.log($scope.mode);
-            var data = {
-              title: $scope.title,
-              organizer: $scope.organizer,
-              description: $scope.description,
-              date: $scope.date,
-              time: $scope.time,
-              cost: $scope.cost,
-              mode: $scope.mode
-            };
-            $http.post("http://localhost:3000/lists", data).then(
+            
+            var data =$scope.title;
+            $http.delete("http://localhost:3000/lists/"+ data).then(
               function(response) {
-                if(response['data']=="event already exist"){
-                  alert("event already exist");
-                }
-                else{
-                  alert("event created");
-                }
+                
+                  alert(" event deleted successfully");
+                
               },
                
             );
