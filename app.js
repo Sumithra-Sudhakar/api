@@ -21,24 +21,27 @@ app.get('/lists', (req, res) => {
     //return array of all the lists in the database
     List.find({}).then((lists) => {
         res.send(lists);
+        
     })
+    
 });
 
 app.post('/lists', (req, res) => {
     //create a new list and return the new list document    
     let title = req.body.title;
     let organizer = req.body.organizer;
-    let fee = req.body.fee;
+    let cost = req.body.cost; 
     let date = req.body.date;
     let time = req.body.time;
     let description = req.body.description;
+    let mode = req.body.mode;
 
     let newList = new List({        
         title,
         organizer,
         description,
-
-        fee,
+        mode,
+        cost,
         date,
         time,
         
@@ -65,53 +68,57 @@ app.delete('/lists/:id', (req, res) => {
     })
 });
 
+
+
+
 //now for each and every task 
-app.get('/lists/:listId/tasks', (req, res) => { 
+app.get('/tasks', (req, res) => { 
     console.log(req.params);
     //return all tasks that belong to a specific list (specified by listId)
     Task.find({
-        _listId: req.params.listId
+        
     }).then((tasks) => {
         res.send(tasks);
     })
 });
-app.get('/lists/:listId/tasks/:taskId', (req, res) => {
-    //return the specified task (task document with id in the URL)
-    Task.findOne({
-        _id: req.params.taskId,
-        _listId: req.params.listId
-    }).then((task) => {
-        res.send(task);
-    })
-});
-app.post('/lists/:listId/tasks', (req, res) => {
+ 
+app.post('/tasks', async (req, res) => {
     //create a new task in a list specified by listId
     let newTask = new Task({
         title: req.body.title,
         content: req.body.content,
 
-        _listId: req.params.listId
+         
     });
-    newTask.save().then((newTaskDoc) => {
-        res.send(newTaskDoc);
-    })
+
+    const taskexist =   await Task.findOne({title: req.body.title, content: req.body.content});
+    if(taskexist){
+        res.send("task already exist");
+        console.log("task already exist");
+    }
+    else{
+        newTask.save().then((newTaskDoc) => {
+            //the full task document is returned (incl. id)
+            res.send(newTaskDoc);
+        })
+    }
 });
-app.patch('/lists/:listId/tasks/:taskId', (req, res) => {
+app.patch('/tasks/:taskId', (req, res) => {
     //update an existing task (specified by taskId)
     Task.findOneAndUpdate({
         _id: req.params.taskId,
-        _listId: req.params.listId
+       
     }, {
         $set: req.body
     }).then(() => {
         res.send({message: 'Updated successfully.'});
     })
 });
-app.delete('/lists/:listId/tasks/:taskId', (req, res) => {
+app.delete('tasks/:taskId', (req, res) => {
     //delete a task (specified by taskId)
     Task.findOneAndRemove({
         _id: req.params.taskId,
-        _listId: req.params.listId
+      
     }).then((removedTaskDoc) => {
         res.send(removedTaskDoc);
     })

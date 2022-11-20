@@ -126,7 +126,7 @@
           <h1>Create Event</h1>
         </div>
       </center>
-      <form  name="eventForm"   ng-app="mainApp" ng-controller="eventCtrl" novalidate>
+      <form  name="eventForm"   ng-app="mainApp" ng-controller="eventCtrl" novalidate action="http://localhost:3000/lists" method="post">
         <div class="field" style="margin: 10px">
           <label class="label">Event Name</label>
           <div class="control">
@@ -229,6 +229,12 @@
             </span>
           </div>
         </div>
+       <div style="margin: 20px;">
+        <label class="label">Mode</label>
+        <input type="radio" value="online" ng-model="mode" name="mode" id="mode">Online<br>
+        <input type="radio" value="offline" ng-model="mode" name="mode" id="mode">Offline <br>
+        {{mode}}
+       </div>
 
         <button
           class="btn"
@@ -248,32 +254,35 @@
           $scope.date = "";
           $scope.time = "";
           $scope.cost = "";
-          $scope.Submit = function() {
-            console.log($scope.title);
-            console.log($scope.organizer);
-            console.log($scope.description);
-            console.log($scope.date);
-            console.log($scope.time);
-            console.log($scope.cost);
-            var data = {
-              title: $scope.title,
-              organizer: $scope.organizer,
-              description: $scope.description,
-              date: $scope.date,
-              time: $scope.time,
-              cost: $scope.cost
-            };
-            $http.post("http://localhost:3000/lists", data).then(
-              function(response) {
-                console.log(response);
-              },
-              function(response) {
-                console.log(response);
-              }
-            );
+          $scope.mode = "";
+          // $scope.Submit = function() {
+          //   console.log($scope.title);
+          //   console.log($scope.organizer);
+          //   console.log($scope.description);
+          //   console.log($scope.date);
+          //   console.log($scope.time);
+          //   console.log($scope.cost);
+          //   console.log($scope.mode);
+          //   var data = {
+          //     title: $scope.title,
+          //     organizer: $scope.organizer,
+          //     description: $scope.description,
+          //     date: $scope.date,
+          //     time: $scope.time,
+          //     cost: $scope.cost,
+          //     mode: $scope.mode
+          //   };
+          //   $http.post("http://localhost:3000/lists", data).then(
+          //     function(response) {
+          //       console.log(response);
+          //     },
+          //     function(response) {
+          //       console.log(response);
+          //     }
+          //   );
 
 
-          };
+          // };
         });
     
  

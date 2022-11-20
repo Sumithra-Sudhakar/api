@@ -7,11 +7,7 @@ const TaskSchema = new mongoose.Schema({
         minlength: 1,
         trim:true
     },
-    _listId: {
-        type: mongoose.Types.ObjectId,
-        required: true,
-        ref: 'List'
-    },
+  
     content:{
         type:String,
         required: true,
