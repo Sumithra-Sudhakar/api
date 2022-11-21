@@ -117,13 +117,13 @@
         transform: translateX(-9%) translateY(-25%) rotate(45deg);
       }
     </style>
-    <title>Create Events</title>
+    <title>Delete Notifications</title>
   </head>
   <body >
     <div>
       <center>
         <div class="nine">
-          <h1>Delete Event</h1>
+          <h1>Delete Notification</h1>
         </div>
       </center>
       <form  name="eventForm"   ng-app="mainApp" ng-controller="eventCtrl" novalidate  >
@@ -140,7 +140,7 @@
             />
              
               <span ng-show="eventForm.title.$error.required" style="color: red; margin-top:20px"
-                >Event Name is required.</span
+                >title is required.</span
               >
             </span>
           </div>
@@ -167,10 +167,15 @@
             var data =$scope.title;
             $http.delete("http://localhost:3000/tasks/"+ data).then(
               function(response) {
+                if(response.data =="notification not found"){
                 
-                  alert("notification deleted successfully");
+                  alert("notification not found");
                 
-              },
+              }
+                else{
+                    alert("notification deleted");
+                }
+                },
                
             );
 

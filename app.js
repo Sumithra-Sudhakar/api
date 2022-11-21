@@ -128,15 +128,24 @@ app.patch('/tasks/:taskId', (req, res) => {
         res.send({message: 'Updated successfully.'});
     })
 });
-app.delete('/tasks/:title', (req, res) => {
+app.delete('/tasks/:title', async (req, res) => {
+    console.log(req.params.title);
     //delete the specified list (list document with id in the URL)
-    List.findOneAndRemove({
+   const taskDeleted = await Task.findOne({
+
         title: req.params.title
-    }).then((removedTaskDoc) => {
-        res.send(removedTaskDoc);
-    }).catch((err) => {
-         res.send(err);
-    })
+   });
+    if(taskDeleted){
+        Task.findOneAndRemove({
+            title: req.params.title
+        }).then((removedTaskDoc) => {
+            res.send(removedTaskDoc);
+        })
+    }
+    else{
+        res.send("notification not found");
+    }
+      
 });
 
 app.listen(3000, () => {
