@@ -17,7 +17,7 @@
         
         method: 'GET',
         
-        url: 'http:localhost:3000/lists'
+        url: 'http://localhost:3000/lists'
         
         }).then(function success(response) {
         
@@ -50,6 +50,7 @@
             <h3 style= "color: #ffffff;margin-left:20px;">by {{list['organizer']}}</h3>
             <p style="color: #ffffff;margin-left:20px;"> About the event: {{list['description']}}</p>
             <p style="color: #ffffff;margin-left:20px;">Date: {{list['date']}}</p>
+            <p style="color: #ffffff;margin-left:20px; margin-bottom: 30px;">Cost: {{list['cost']}}</p>
             <p style="color: #ffffff;margin-left:20px; margin-bottom: 30px;">Time: {{list['time']}}</p>
             <p style="color: #ffffff;margin-left:20px; margin-bottom: 30px;">mode: {{list['mode']}}</p>
            

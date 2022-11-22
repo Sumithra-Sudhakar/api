@@ -1,0 +1,8 @@
+<!DOCTYPE add [
+    <!ELEMENT notifcation (id,name, organizer,info)>
+    <!ELEMENT id(#PCDATA)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT organizer (#PCDATA)>
+    <!ELEMENT info (#PCDATA)>
+]
+>

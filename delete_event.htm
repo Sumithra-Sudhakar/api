@@ -168,7 +168,12 @@
             $http.delete("http://localhost:3000/lists/"+ data).then(
               function(response) {
                 
-                  alert(" event deleted successfully");
+                if(response['data']=="event not found"){
+                  alert("event not found");
+                }
+                else{
+                  alert("event deleted");
+                }
                 
               },
                

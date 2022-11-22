@@ -65,21 +65,31 @@ app.post('/lists', async (req, res) => {
 
     
 });
-app.patch('/lists/:id', (req, res) => {
+app.patch('/lists/:title', (req, res) => {
     //update the specified list (list document with id in the URL) with the new values specified in the JSON body of the request
-    List.findOneAndUpdate({_id: req.params.id}, {
+    List.findOneAndUpdate({title: req.params.title}, {
         $set: req.body //upate the list that its find with the condition
     }).then(() => {
-        res.sendStatus(200);
+        res.send("modified");
     })
 });
-app.delete('/lists/:title', (req, res) => {
+app.delete('/lists/:title', async (req, res) => {
     //delete the specified list (list document with id in the URL)
-    List.findOneAndRemove({
+     
+    const taskDeleted = await List.findOne({
+
         title: req.params.title
-    }).then((removedListDoc) => {
-        res.send(removedListDoc);
-    }) 
+   });
+    if(taskDeleted){
+        List.findOneAndRemove({
+            title: req.params.title
+        }).then((removedListDoc) => {
+            res.send(removedListDoc);
+        })
+    }
+    else{
+        res.send("event not found");
+    }
 });
 
 
@@ -117,10 +127,11 @@ app.post('/tasks', async (req, res) => {
         })
     }
 });
-app.patch('/tasks/:taskId', (req, res) => {
+app.patch('/tasks/:title', (req, res) => {
     //update an existing task (specified by taskId)
+    console.log("req.params");
     Task.findOneAndUpdate({
-        _id: req.params.taskId,
+        title: req.params.title,
        
     }, {
         $set: req.body

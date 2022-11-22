@@ -1,0 +1,23 @@
+<users>
+    <user>
+        <name>Sumithra</name>
+        <email>sumisooriya@gmail.com</email>
+        <password>12345678</password>
+        <RSVP>2</RSVP>
+        <Star>12</Star>
+    </user>
+    <user>
+        <name>Nirmal</name>
+        <email>nirmal@gmail.com</email>
+        <password>10305678</password>
+        <RSVP>12</RSVP>
+        <Star>2</Star>
+    </user>
+    <user>
+        <name>Sreehari</name>
+        <email>orectique@gmail.com</email>
+        <password>1234554321</password>
+        <RSVP>2</RSVP>
+        <Star>12</Star>
+    </user>
+</users>
